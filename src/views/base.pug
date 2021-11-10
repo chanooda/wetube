@@ -12,6 +12,10 @@ html(lang="ko")
                         a(href="/videos/upload") #{pageTitle==="Home" ? "Upload Video" : ""} 
                     li 
                         a(href="/") #{pageTitle!="Home" ? "Home" : ""} 
+                    li 
+                        a(href="/search") #{pageTitle==="Home" ? "Search" : ""} 
+                    li 
+                        a(href="/join") #{pageTitle==="Home" ? "Join" : ""} 
         main
             block content
         include partials/footer.pug
