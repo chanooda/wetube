@@ -1,6 +1,8 @@
 extends base.pug
 
 block content 
+    if errorMessage
+        span=errorMessage
     form(method="post")
         input(placeholder="Name",name="name", type="text", required, value=loggendInUser.name)
         input(placeholder="E-Mail",name="email", type="text", required ,value=loggendInUser.email)

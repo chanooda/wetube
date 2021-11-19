@@ -12,7 +12,7 @@ export const postJoin = async (req, res) => {
       errorMessage: "Password confirmation does not match",
     });
   }
-  const exists = await User.exists({ email });
+  const exists = await User.exists({ $or: [{ email }, { username }] });
   if (exists) {
     return res.status(400).render("join", {
       errorMessage: "This username or e-mail is already taken.",
@@ -147,6 +147,24 @@ export const postEdit = async (req, res) => {
     },
     body: { name, email, username, location },
   } = req;
+  const sessionEmail = req.session.user.email;
+  const sessionUsername = req.session.user.username;
+  if (email !== sessionEmail) {
+    const emailExists = await User.exists({ email });
+    if (emailExists) {
+      return res.render("edit-profile", {
+        errorMessage: "This email is already taken.",
+      });
+    }
+  }
+  if (username !== sessionUsername) {
+    const usernameExists = await User.exists({ username });
+    if (usernameExists) {
+      return res.render("edit-profile", {
+        errorMessage: "This username is already taken.",
+      });
+    }
+  }
   const updatedUser = await User.findByIdAndUpdate(
     _id,
     {
