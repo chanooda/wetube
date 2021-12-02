@@ -1,0 +1,135 @@
+#video-container {
+  width: 100%;
+  position: relative;
+  video {
+    width: 100%;
+  }
+  #videoControls {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    &.show {
+      opacity: 1;
+    }
+    bottom: 10px;
+    width: 100%;
+    position: absolute;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+    .time {
+      width: 100%;
+      input {
+        width: 100%;
+      }
+    }
+    .underBox {
+      margin-top: 10px;
+      box-sizing: border-box;
+      padding: 0 20px;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .leftBox {
+        width: 200px;
+        display: grid;
+        grid-template-columns: auto auto auto;
+        gap: 20px;
+        align-items: center;
+        .soundBox {
+          display: flex;
+          align-items: center;
+        }
+        input {
+          width: 80px;
+        }
+        .timeline {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          span {
+            margin: 0px 2px;
+          }
+        }
+      }
+    }
+  }
+  i {
+    cursor: pointer;
+  }
+}
+#more {
+  display: flex;
+  justify-content: space-between;
+  flex-flow: column;
+  h1 {
+    font-size: 23px;
+  }
+  .video-title {
+    margin-top: 15px;
+    a {
+      font-size: 15px;
+      color: royalblue;
+      margin-right: 5px;
+    }
+  }
+  .video-meta {
+    margin-top: 15px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba($color: grey, $alpha: 0.4);
+    display: flex;
+    justify-content: space-between;
+
+    .video-meta_views {
+      font-size: 15px;
+      color: rgba($color: #fff, $alpha: 0.7);
+    }
+    .video-meta_more {
+      margin-right: 10px;
+      position: relative;
+      .video-meta_more_dropbox {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        right: 0px;
+        width: 150px;
+        background-color: #212121;
+        text-align: center;
+        border-radius: 5px;
+        box-shadow: 1px 1px 5px rgba($color: #000000, $alpha: 0.3);
+        display: none;
+        * {
+          padding: 10px 0px;
+          cursor: pointer;
+        }
+        &.drop {
+          display: flex;
+        }
+      }
+      i {
+        cursor: pointer;
+      }
+    }
+  }
+  .video-userInfo {
+    display: flex;
+    align-items: center;
+    padding: 15px 0px;
+    a:last-child {
+      margin-left: 15px;
+    }
+    span {
+      font-size: 18px;
+    }
+    .userInfo_avatar {
+      width: 50px;
+      height: 50px;
+    }
+  }
+  .video-info {
+    width: 700px;
+    padding-left: 67px;
+  }
+}

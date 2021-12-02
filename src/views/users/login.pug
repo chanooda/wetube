@@ -1,16 +1,19 @@
-extends base
+extends ../base
 
 block content 
     if errorMessage
+        div.error-box
         span=errorMessage
     form(method="post")
         input(placeholder="User Name",name="username", type="text", required)
         input(placeholder="Password",name="password", type="password", required)
-        input(type="submit" value="Log in")
-        br
-        a(href="/users/github/start") Continue with Github &rarr; 
-    hr
-    div 
+        input(type="submit" value="Log in").submit-button
+        div.social-login
+            a(href="/users/github/start").social-login-button
+                i.fab.fa-github 
+                |  Continue with Github &rarr;
+    div.form-link
         span Don't have an account? 
         a(href="/join") Create one now &rarr; 
+    
     

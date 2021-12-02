@@ -1,11 +1,16 @@
-extends base.pug
+extends ../base.pug
 
 block content 
     if errorMessage
         span=errorMessage
-    form(method="post")
+    
+    form(method="post" enctype ="multipart/form-data")
+        input(type="file", accept="image/*",name="avatar") 
         input(placeholder="Name",name="name", type="text", required, value=loggendInUser.name)
         input(placeholder="E-Mail",name="email", type="text", required ,value=loggendInUser.email)
         input(placeholder="User Name",name="username", type="text", required ,value=loggendInUser.username)
         input(placeholder="Location",name="location", type="text",value=loggendInUser.location)
-        input(type="submit" value="Update Profile")
+        input(type="submit" value="Update Profile").submit-button
+        if !loggendInUser.socialOnly
+            div.edit-profile__password    
+                a(href="change-password") Change password &rarr;

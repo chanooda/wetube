@@ -1,5 +1,5 @@
-import bcrypt from "bcrypt";
 import Mongoose from "mongoose";
+import bcrypt from "bcrypt";
 
 const userSchema = new Mongoose.Schema({
   email: { type: String, required: true, unique: true },
@@ -9,10 +9,13 @@ const userSchema = new Mongoose.Schema({
   password: { type: String },
   name: { type: String, required: true },
   location: String,
+  videos: [{ type: Mongoose.Schema.Types.ObjectId, ref: "Video" }],
 });
 
 userSchema.pre("save", async function () {
-  this.password = await bcrypt.hash(this.password, 5);
+  if (this.isModified("password")) {
+    this.password = await bcrypt.hash(this.password, 5);
+  }
 });
 
 const User = Mongoose.model("User", userSchema);

@@ -1,0 +1,45 @@
+form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+  max-width: 450px;
+  margin: 0 auto;
+  margin-bottom: 10px;
+  padding: 30px;
+  background-color: rgba($color: #000000, $alpha: 0.3);
+  input {
+    all: unset;
+    padding: 15px 20px;
+    border: 1px solid#202020;
+    background-color: black;
+    font-size: 16px;
+    color: white;
+    width: 400px;
+    margin-bottom: 5px;
+  }
+  .submit-button {
+    background-color: $red;
+    cursor: pointer;
+    text-align: center;
+  }
+  hr {
+    width: 100%;
+    border: 1px solid rgba($color: #fff, $alpha: 0.3);
+  }
+}
+.form-link {
+  margin: 0 auto;
+  margin-top: 50px;
+  width: 442px;
+  text-align: center;
+  font-size: 18px;
+  span {
+    opacity: 0.6;
+    margin-top: 10px;
+    margin-bottom: 5px;
+  }
+  a {
+    text-decoration: underline;
+  }
+}

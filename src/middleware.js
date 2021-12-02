@@ -1,8 +1,8 @@
+import multer from "multer";
+
 export const localsMiddleware = (req, res, next) => {
-  console.log(res.locals);
   res.locals.loggedIn = Boolean(req.session.loggedIn);
   res.locals.loggendInUser = req.session.user || {};
-
   next();
 };
 
@@ -21,3 +21,12 @@ export const publicOnlyMiddleware = (req, res, next) => {
     return res.redirect("/");
   }
 };
+
+export const avatarUploadFiles = multer({
+  dest: "uploads/avatars/",
+  limits: { fileSize: 3000000 },
+});
+export const videoUploadFiles = multer({
+  dest: "uploads/videos/",
+  limits: { fileSize: 3000000000 },
+});

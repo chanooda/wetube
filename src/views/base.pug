@@ -1,31 +1,14 @@
 doctype html 
 html(lang="ko")
     head    
-        title #{pageTitle} | WebTube
-        link(rel="stylesheet" href="https://unpkg.com/mvp.css")
+        title #{pageTitle}
+        link(rel="shortcut icon", href="https://github.com/chanooda/test/blob/main/WeTube-icon.png?raw=true")
+        link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css")
+        link(rel="stylesheet", href="/static/css/styles.css")
     body    
-        header
-            h1=pageTitle
-            nav 
-                ul 
-                    li 
-                        a(href="/") #{pageTitle!="Home" ? "Home" : ""} 
-                    li 
-                        a(href="/search") #{pageTitle==="Home" ? "Search" : ""} 
-                    
-                    if !loggedIn
-                        li 
-                            a(href="/join") #{pageTitle==="Home" ? "Join" : ""} 
-                        li 
-                            a(href="/login") #{pageTitle==="Home" ? "Log in" : ""} 
-                    else 
-                        li 
-                            a(href="/users/edit") Edit Profile
-                        li 
-                            a(href="/videos/upload") #{pageTitle==="Home" ? "Upload Video" : ""}
-                        li 
-                            a(href="/users/logout") Log out 
+        include partials/header.pug
         main
             block content
                 
         include partials/footer.pug
+        block scripts

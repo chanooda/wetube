@@ -1,10 +1,48 @@
 extends base.pug
+include mixins/hashtag
 
 block content 
-    div
-        p=video.description
-        small=video.createdAt
-    a(href=`${video.id}/edit`) Edit Video &rarr;  
-    br
-    a(href=`${video.id}/delete`) Delete Video &rarr;  
+    div#video-container(data-id=video._id)
+        video(src="/" + video.fileUrl).canPlay
+        div#videoControls
+            div.time
+                input(type="range", min="0",step="1" ,value="0")#timeline
+            div.underBox 
+                div.leftBox
+                    div.playBox 
+                        i.fas.fa-play
+                    div.soundBox
+                        i.fas.fa-volume-up
+                        input(type="range", min="0",max="1",step="0.01" ,value="0.5")#volume 
+                    div.timeline
+                        span#currentTime 0:00
+                        span  / 
+                        span#totalTime     
+                div.rightBox
+                    i.fas.fa-expand.fullscreen
+    div#more
+        div.video-title
+            each hash in video.hashtags
+                +hash(hash)
+            h1=video.title
+        div.video-meta
+            div.video-meta_views
+                small 조회수 #{video.meta.views}회 · #{video.createdAt.toISOString().substr(0,10)}
+            div.video-meta_more
+                i.fas.fa-ellipsis-h 
+                div.video-meta_more_dropbox
+                    p Download
+                    if String(video.owner._id) === String(loggendInUser._id)
+                        a(href=`${video.id}/edit`) Edit Video 
+                        a(href=`${video.id}/delete`) Delete Video
+            
+        div.video-userInfo
+            a(href=`/users/${video.owner._id}`) 
+                img(src="/" + video.owner.avatarUrl).userInfo_avatar.avatar
+            a(href=`/users/${video.owner._id}`)
+                span=video.owner.name
+        div.video-info
+            p=video.description 
 
+block scripts
+    script(src="/static/js/videoPlayer.js")

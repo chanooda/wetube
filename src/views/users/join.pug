@@ -1,7 +1,8 @@
-extends base
+extends ../base
 
-block content 
+block content
     if errorMessage
+    div.error-box
         span=errorMessage
     form(method="post")
         input(placeholder="Name",name="name", type="text", required)
@@ -10,9 +11,12 @@ block content
         input(placeholder="Password",name="password", type="password", required)
         input(placeholder="Confirm Password",name="password2", type="password", required)
         input(placeholder="Location",name="location", type="text", required)
-        input(type="submit" value="join")
-    hr
-    div 
+        input(type="submit" value="join").submit-button
+        div.social-login
+            a(href="/users/github/start").social-login-button
+                i.fab.fa-github 
+                |  Continue with Github &rarr;
+    div.form-link 
         span Already have an account? 
         a(href="/login") Log in now &rarr; 
     

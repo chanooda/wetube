@@ -1,20 +1,21 @@
 import User from "../models/User";
 import fetch from "node-fetch";
 import bcrypt from "bcrypt";
+import session from "express-session";
 
 export const getJoin = (req, res) => {
-  res.render("join", { pageTitle: "Join" });
+  res.render("users/join", { pageTitle: "Join" });
 };
 export const postJoin = async (req, res) => {
   const { name, username, email, password, password2, location } = req.body;
   if (password !== password2) {
-    return res.status(400).render("join", {
+    return res.status(400).render("users/join", {
       errorMessage: "Password confirmation does not match",
     });
   }
   const exists = await User.exists({ $or: [{ email }, { username }] });
   if (exists) {
-    return res.status(400).render("join", {
+    return res.status(400).render("users/join", {
       errorMessage: "This username or e-mail is already taken.",
     });
   }
@@ -26,29 +27,29 @@ export const postJoin = async (req, res) => {
       password,
       location,
     });
-    return res.redirect("/login");
+    return res.redirect("login");
   } catch (error) {
     return res
       .status(400)
-      .render("join", { pageTitle: "Join", errorMessage: error.message });
+      .render("users/join", { pageTitle: "Join", errorMessage: error.message });
   }
 };
 export const getLogin = (req, res) => {
-  res.render("Login", { pageTitle: "Log in" });
+  res.render("users/login", { pageTitle: "Log in" });
 };
 
 export const postLogin = async (req, res) => {
   const { username, password } = req.body;
   const user = await User.findOne({ username, socialOnly: false });
   if (!user) {
-    res.status(400).render("login", {
+    return res.status(400).render("users/login", {
       pageTitle: "login",
       errorMessage: "An account with this username does not exists",
     });
   }
   const ok = await bcrypt.compare(password, user.password);
   if (!ok) {
-    res.status(400).render("login", {
+    return res.status(400).render("users/login", {
       pageTitle: "login",
       errorMessage: "Wrong Password",
     });
@@ -138,21 +139,22 @@ export const logout = (req, res) => {
 };
 
 export const getEdit = (req, res) => {
-  return res.render("edit-profile", { pageTitle: "Edit Profile" });
+  return res.render("users/edit-profile", { pageTitle: "Edit Profile" });
 };
 export const postEdit = async (req, res) => {
   const {
     session: {
-      user: { _id },
+      user: { _id, avatarUrl },
     },
     body: { name, email, username, location },
+    file,
   } = req;
   const sessionEmail = req.session.user.email;
   const sessionUsername = req.session.user.username;
   if (email !== sessionEmail) {
     const emailExists = await User.exists({ email });
     if (emailExists) {
-      return res.render("edit-profile", {
+      return res.render("users/edit-profile", {
         errorMessage: "This email is already taken.",
       });
     }
@@ -160,7 +162,7 @@ export const postEdit = async (req, res) => {
   if (username !== sessionUsername) {
     const usernameExists = await User.exists({ username });
     if (usernameExists) {
-      return res.render("edit-profile", {
+      return res.render("users/edit-profile", {
         errorMessage: "This username is already taken.",
       });
     }
@@ -168,6 +170,7 @@ export const postEdit = async (req, res) => {
   const updatedUser = await User.findByIdAndUpdate(
     _id,
     {
+      avatarUrl: file ? file.path : avatarUrl,
       name,
       email,
       username,
@@ -175,10 +178,53 @@ export const postEdit = async (req, res) => {
     },
     { new: true }
   );
-
   req.session.user = updatedUser;
   return res.redirect("/users/edit");
 };
 
-export const edit = (req, res) => res.send("Edit User");
-export const see = (req, res) => res.send("Edit User");
+export const getChangePassword = (req, res) => {
+  return res.render("users/change-password", { pageTitle: "Change Password" });
+};
+export const postChangePassword = async (req, res) => {
+  const {
+    session: {
+      user: { _id, password },
+    },
+    body: { oldPassword, newPassword, newPasswordConfirmation },
+  } = req;
+  const ok = await bcrypt.compare(oldPassword, password);
+  if (!ok) {
+    return res.status(400).render("users/change-password", {
+      pageTitle: "Change Password",
+      errorMessage: "The current password is incorrect",
+    });
+  }
+  if (newPassword !== newPasswordConfirmation) {
+    return res.status(400).render("users/change-password", {
+      pageTitle: "Change Password",
+      errorMessage: "The password does not match the confirmation",
+    });
+  }
+  const user = await User.findById(_id);
+  user.password = newPassword;
+  await user.save();
+  req.session.user.password = user.password;
+  return res.redirect("/users/logout");
+};
+export const see = async (req, res) => {
+  const { id } = req.params;
+  const user = await User.findById(id).populate({
+    path: "videos",
+    populate: {
+      path: "owner",
+      model: "User",
+    },
+  });
+  if (!user) {
+    return res.status.render("404", { pageTitle: "User not found." });
+  }
+  return res.render("users/profile", {
+    pageTitle: user.name,
+    user,
+  });
+};
