@@ -12,10 +12,14 @@ const totalTime = document.getElementById("totalTime");
 const fullScreen = document.querySelector(".rightBox i");
 const moreDropbox = document.querySelector(".video-meta_more_dropbox");
 const moreIcon = document.querySelector(".video-meta_more i");
+const body = document.body;
+const downloadBtn = document.getElementById("download-link");
+const textarea = document.querySelector("#commentForm textarea");
 
 let controlsTimeout = null;
 let controlsMove = null;
 let volumeValue = 0.5;
+
 video.volume = volumeValue;
 
 const handlePlayClick = (e) => {
@@ -123,14 +127,43 @@ const moreIconClickHandler = () => {
   moreDropbox.classList.toggle("drop");
 };
 
+const clearDrop = (event) => {
+  if (event.target.classList.contains("fa-ellipsis-h")) {
+    moreDropbox.classList.add("drop");
+  } else {
+    moreDropbox.classList.remove("drop");
+  }
+};
+
+const commentClearDrop = (event) => {
+  var comment_more = document.getElementsByClassName("drop");
+  if (event.target.classList.contains("asdf")) {
+    [].forEach.call(comment_more, function (el) {
+      el.classList.remove("drop");
+    });
+    event.target.nextSibling.classList.add("drop");
+  } else {
+    [].forEach.call(comment_more, function (el) {
+      el.classList.remove("drop");
+    });
+  }
+};
+
+const handleDownload = () => {
+  const { downloadname } = downloadBtn.dataset;
+  const videoUrl = video.currentSrc;
+};
+
 playBtn.addEventListener("click", handlePlayClick);
 canPlay.addEventListener("click", handlePlayClick);
 document.addEventListener("keyup", (event) => {
-  if (event.code === "Space") {
-    handlePlayClick();
-  } else if (event.key === "f") {
-    console.log("asd");
-    handleFullScreen();
+  if (event.target !== textarea) {
+    if (event.code === "Space") {
+      handlePlayClick();
+    } else if (event.key === "f") {
+      console.log("asd");
+      handleFullScreen();
+    }
   }
 });
 muteBtn.addEventListener("click", handleMuteBtn);
@@ -142,4 +175,6 @@ timeline.addEventListener("input", handleTimelineChange);
 fullScreen.addEventListener("click", handleFullScreen);
 videoContainer.addEventListener("mousemove", handleMouseMove);
 videoContainer.addEventListener("mouseleave", handleMouseLeave);
-moreIcon.addEventListener("click", moreIconClickHandler);
+body.addEventListener("click", clearDrop);
+body.addEventListener("click", commentClearDrop);
+downloadBtn.addEventListener("click", handleDownload);

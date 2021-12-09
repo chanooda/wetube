@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 const videoSchema = new mongoose.Schema({
   title: { type: String, required: true, trim: true, maxLength: 100 },
   fileUrl: { type: String, required: true },
+  thumbUrl: { type: String },
   description: {
     type: String,
     requiredPaths: true,
@@ -16,6 +17,7 @@ const videoSchema = new mongoose.Schema({
     rating: { type: Number, default: 0, required: true },
   },
   owner: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "User" },
+  comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
 });
 
 videoSchema.static("formatHashtags", function (hashtags) {

@@ -5,12 +5,18 @@
     width: 100%;
   }
   #videoControls {
+    padding-bottom: 15px;
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0),
+      rgba(0, 0, 0, 0.5)
+    );
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
     &.show {
       opacity: 1;
     }
-    bottom: 10px;
+    bottom: 0px;
     width: 100%;
     position: absolute;
     z-index: 2;

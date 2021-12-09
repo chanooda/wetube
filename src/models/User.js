@@ -1,7 +1,7 @@
-import Mongoose from "mongoose";
+import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 
-const userSchema = new Mongoose.Schema({
+const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   avatarUrl: { type: String },
   socialOnly: { type: Boolean, default: false },
@@ -9,7 +9,8 @@ const userSchema = new Mongoose.Schema({
   password: { type: String },
   name: { type: String, required: true },
   location: String,
-  videos: [{ type: Mongoose.Schema.Types.ObjectId, ref: "Video" }],
+  comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
+  videos: [{ type: mongoose.Schema.Types.ObjectId, ref: "Video" }],
 });
 
 userSchema.pre("save", async function () {
@@ -18,6 +19,6 @@ userSchema.pre("save", async function () {
   }
 });
 
-const User = Mongoose.model("User", userSchema);
+const User = mongoose.model("User", userSchema);
 
 export default User;
