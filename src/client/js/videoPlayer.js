@@ -151,8 +151,11 @@ const commentClearDrop = (event) => {
 };
 
 const handleDownload = () => {
+  const asd = document.getElementById("download-link");
   const { downloadname } = downloadBtn.dataset;
   const videoUrl = video.currentSrc;
+  asd.download = `${downloadname}.mp4`;
+  asd.href = videoUrl;
 };
 
 playBtn.addEventListener("click", handlePlayClick);
