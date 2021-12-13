@@ -155,7 +155,7 @@ const handleDownload = () => {
   const { downloadname } = downloadBtn.dataset;
   const videoUrl = video.currentSrc;
   asd.download = `${downloadname}.mp4`;
-  asd.href = videoUrl;
+  asd.href = `${videoUrl}.mp4`;
 };
 
 playBtn.addEventListener("click", handlePlayClick);
