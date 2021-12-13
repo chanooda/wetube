@@ -1,2 +1,3 @@
 import "../scss/styles.scss";
-console.log("hi");
+
+import "regenerator-runtime/runtime";

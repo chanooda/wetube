@@ -21,6 +21,7 @@ export const postJoin = async (req, res) => {
   }
   try {
     await User.create({
+      avatarUrl: "/img/user.png",
       name,
       username,
       email,
@@ -118,7 +119,7 @@ export const finishGithubLogin = async (req, res) => {
     console.log(userData);
     if (!user) {
       user = await User.create({
-        avatarUrl: userData.avatar_url,
+        avatarUrl: "/img/user.png",
         name: userData.name,
         username: userData.login,
         email: emailObj.email,
@@ -135,8 +136,9 @@ export const finishGithubLogin = async (req, res) => {
   }
 };
 export const logout = (req, res) => {
-  req.session.destroy();
   req.flash("info", "Bye Bye");
+  req.session.destroy();
+
   res.redirect("/");
 };
 
@@ -172,7 +174,7 @@ export const postEdit = async (req, res) => {
   const updatedUser = await User.findByIdAndUpdate(
     _id,
     {
-      avatarUrl: file ? file.path : avatarUrl,
+      avatarUrl: file ? "/" + file.path : avatarUrl,
       name,
       email,
       username,

@@ -20,6 +20,12 @@ header {
       font-size: 14px;
       font-weight: 600;
       text-transform: uppercase;
+      .image_box {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        background-color: white;
+      }
     }
     i {
       font-size: 16px;

@@ -29,7 +29,7 @@ block content
             div.video-meta_views
                 small 조회수 #{video.meta.views}회 · #{video.createdAt.toISOString().substr(0,10)}
             div.video-meta_more
-                i.fas.fa-ellipsis-h 
+                i.fas.fa-ellipsis-h.need_drop  
                 div.video-meta_more_dropbox
                     a(data-downloadname=video.title)#download-link Download
                     if String(video.owner._id) === String(loggendInUser._id)
@@ -38,7 +38,7 @@ block content
             
         div.video-userInfo
             a(href=`/users/${video.owner._id}`) 
-                img(src="/" + video.owner.avatarUrl).userInfo_avatar.avatar
+                img(src=video.owner.avatarUrl).userInfo_avatar.avatar
             a(href=`/users/${video.owner._id}`)
                 span=video.owner.name
         div.video-info
@@ -46,25 +46,29 @@ block content
     
     if loggedIn
         div#video__comments
-            form.video__comment-form#commentForm
+            form.video__comment-form#commentForm(data-user=loggendInUser.name,data-avatar=loggendInUser.avatarUrl,data-userId=loggendInUser._id)
                 textarea.video__comment-form-textarea(cols="10", rows="10" placeholder="댓글 추가"  )
                 button 댓글
-        div#video_comment_list
+    div#video_comment_list
             ul#video_comment_list_ul
                 for comment in video.comments.reverse()
-                    li.video__commnets
+                    li.video__commnets(data-id = comment._id)
                         div.video__commnets-left 
                             div.comment_img
-                                img(src=comment.owner.avatarUrl)
+                                a(href=`/users/${comment.owner._id}`) 
+                                    img(src=comment.owner.avatarUrl)
                             div.comment_text
-                                span #{comment.owner.name} 
+                                div 
+                                    a(href=`/users/${comment.owner._id}`)
+                                        span=comment.owner.name
                                     small=comment.createdAt.toISOString().substr(0,10)
                                 p=comment.text
                         div.video__commnets-right
-                            i.fas.fa-ellipsis-v.asdf
-                            div.comment_more 
-                                p Delete
-                                p Edit
+                            i.fas.fa-ellipsis-v.need_drop 
+                            if String(comment.owner._id) === String(loggendInUser._id)
+                                div.comment_more
+                                    p#delete.comment_delete_button Delete
+                                    p.comment_edit_button Edit    
 
 block scripts               
     script(src="/static/js/videoPlayer.js")

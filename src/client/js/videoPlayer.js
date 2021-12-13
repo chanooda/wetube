@@ -15,6 +15,7 @@ const moreIcon = document.querySelector(".video-meta_more i");
 const body = document.body;
 const downloadBtn = document.getElementById("download-link");
 const textarea = document.querySelector("#commentForm textarea");
+const comment_more = document.querySelectorAll(".comment_more");
 
 let controlsTimeout = null;
 let controlsMove = null;
@@ -90,7 +91,7 @@ const handleFullScreen = () => {
 
 document.onfullscreenchange = () => {
   const fullscreen = document.fullscreenElement;
-  console.log(fullscreen);
+
   if (fullscreen) {
     fullScreen.classList = "fas fa-compress";
   } else {
@@ -136,14 +137,14 @@ const clearDrop = (event) => {
 };
 
 const commentClearDrop = (event) => {
-  var comment_more = document.getElementsByClassName("drop");
-  if (event.target.classList.contains("asdf")) {
-    [].forEach.call(comment_more, function (el) {
+  const comment_mores = document.querySelectorAll(".drop");
+  if (event.target.classList.contains("need_drop")) {
+    [].forEach.call(comment_mores, function (el) {
       el.classList.remove("drop");
     });
     event.target.nextSibling.classList.add("drop");
   } else {
-    [].forEach.call(comment_more, function (el) {
+    [].forEach.call(comment_mores, function (el) {
       el.classList.remove("drop");
     });
   }
@@ -161,7 +162,6 @@ document.addEventListener("keyup", (event) => {
     if (event.code === "Space") {
       handlePlayClick();
     } else if (event.key === "f") {
-      console.log("asd");
       handleFullScreen();
     }
   }
@@ -176,5 +176,7 @@ fullScreen.addEventListener("click", handleFullScreen);
 videoContainer.addEventListener("mousemove", handleMouseMove);
 videoContainer.addEventListener("mouseleave", handleMouseLeave);
 body.addEventListener("click", clearDrop);
-body.addEventListener("click", commentClearDrop);
+if (comment_more) {
+  body.addEventListener("click", commentClearDrop);
+}
 downloadBtn.addEventListener("click", handleDownload);

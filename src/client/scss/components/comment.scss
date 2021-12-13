@@ -24,7 +24,7 @@
   }
 }
 #video_comment_list {
-  margin-top: 20px;
+  margin-top: 50px;
   #video_comment_list_ul {
     li {
       box-sizing: border-box;
@@ -57,21 +57,34 @@
           width: 1140px;
           margin-left: 10px;
           box-sizing: border-box;
-          padding: 10px 0px;
           height: 40px;
           display: flex;
           align-items: flex-start;
           justify-content: center;
           flex-direction: column;
-        }
-        span {
-          font-size: 12px;
-          display: flex;
-          flex-direction: column;
-        }
-        p {
-          font-size: 15px;
-          height: 92px;
+          div {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+
+            span {
+              font-weight: 600;
+              font-size: 16px;
+              display: flex;
+              flex-direction: column;
+            }
+            small {
+              color: rgba($color: #fff, $alpha: 0.5);
+              margin-left: 5px;
+              font-size: 10px;
+            }
+          }
+
+          p {
+            font-weight: 100;
+            font-size: 20px;
+            height: 92px;
+          }
         }
       }
       .video__commnets-right {

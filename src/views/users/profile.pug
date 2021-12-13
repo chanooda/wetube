@@ -3,10 +3,8 @@ include ../mixins/Video.pug
 
 block content
     div.profile__data
-        if user.avatarUrl ===" " || !user.avatarUrl
-            div.big-avatar.cover-image
-        else 
-            img(src="/" + user.avatarUrl).big-avatar
+        div
+            img(src=user.avatarUrl).big-avatar      
         h3=user.name
     div.video-grid
         each video in user.videos

@@ -21,7 +21,5 @@ header
                     a(href="/users/logout") Log out 
                 li 
                     a(href=`/users/${loggendInUser._id}`)
-                        if loggendInUser.avatarUrl === " " || !loggendInUser.avatarUrl
-                            div.cover-image.avatar
-                        else 
-                            img.avatar(src="/"+ loggendInUser.avatarUrl)
+                        div.image_box
+                            img.avatar(src=loggendInUser.avatarUrl)
