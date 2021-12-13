@@ -133,12 +133,15 @@ export const postUpload = async (req, res) => {
   // }
 
   try {
+    console.log(req.files);
     const newVideo = await Video.create({
       title,
-      fileUrl: heroku ? video[0].location : video[0].path,
+      fileUrl: heroku
+        ? video[0].location.replace(/[\\]/g, "/")
+        : "/" + video[0].path.replace(/[\\]/g, "/"),
       thumbUrl: heroku
         ? thumb[0].location.replace(/[\\]/g, "/")
-        : video[0].path.replace(/[\\]/g, "/"),
+        : "/" + thumb[0].path.replace(/[\\]/g, "/"),
       owner: _id,
       description,
       hashtags: hashtags === "" ? [] : Video.formatHashtags(hashtags),
