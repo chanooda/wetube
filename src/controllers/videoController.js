@@ -99,7 +99,7 @@ export const postUpload = async (req, res) => {
   } = req.session;
   const { video, thumb } = req.files;
   const { title, description, hashtags } = req.body;
-
+  const heroku = process.env.NODE_ENV === "production";
   // if (!thumb) {
   //   // const ffmpeg = createFFmpeg({
   //   //   log: true,
@@ -135,8 +135,10 @@ export const postUpload = async (req, res) => {
   try {
     const newVideo = await Video.create({
       title,
-      fileUrl: video[0].location,
-      thumbUrl: thumb ? thumb[0].location.replace(/[\\]/g, "/") : " ",
+      fileUrl: heroku ? video[0].location : video[0].path,
+      thumbUrl: heroku
+        ? thumb[0].location.replace(/[\\]/g, "/")
+        : video[0].path.replace(/[\\]/g, "/"),
       owner: _id,
       description,
       hashtags: hashtags === "" ? [] : Video.formatHashtags(hashtags),
