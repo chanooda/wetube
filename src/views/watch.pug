@@ -3,7 +3,7 @@ include mixins/hashtag
 
 block content 
     div#video-container(data-id=video._id)
-        video(src="/" + video.fileUrl).canPlay
+        video(src=video.fileUrl crossorigin).canPlay
         div#videoControls
             div.time
                 input(type="range", min="0",step="1" ,value="0")#timeline
@@ -32,13 +32,13 @@ block content
                 i.fas.fa-ellipsis-h.need_drop  
                 div.video-meta_more_dropbox
                     a(data-downloadname=video.title)#download-link Download
-                    if String(video.owner._id) === String(loggendInUser._id)
+                    if String(video.owner._id ) === String(loggendInUser._id)
                         a(href=`${video.id}/edit`) Edit Video 
                         a(href=`${video.id}/delete`) Delete Video
             
         div.video-userInfo
             a(href=`/users/${video.owner._id}`) 
-                img(src=video.owner.avatarUrl).userInfo_avatar.avatar
+                img(src=video.owner.avatarUrl crossorigin).userInfo_avatar.avatar
             a(href=`/users/${video.owner._id}`)
                 span=video.owner.name
         div.video-info
@@ -56,7 +56,7 @@ block content
                         div.video__commnets-left 
                             div.comment_img
                                 a(href=`/users/${comment.owner._id}`) 
-                                    img(src=comment.owner.avatarUrl)
+                                    img(src=comment.owner.avatarUrl crossorigin)
                             div.comment_text
                                 div 
                                     a(href=`/users/${comment.owner._id}`)
