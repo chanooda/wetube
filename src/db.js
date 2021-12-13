@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 console.log(process.env.DB_URL);
-mongoose.connect(encodeURI(process.env).DB_URL, {
+mongoose.connect(encodeURI(process.env.DB_URL), {
   dbName,
   bufferCommands: false,
   useNewUrlParser: true,
