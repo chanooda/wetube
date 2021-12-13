@@ -220,6 +220,7 @@ export const deleteVideo = async (req, res) => {
   } = req.session;
   const video = await Video.findById(id);
   const user = await User.findById(video.owner);
+  const commentList = video.comment;
   if (!video) {
     res.status(404).render("404", { pageTitle: "Video not found." });
   }
@@ -228,6 +229,11 @@ export const deleteVideo = async (req, res) => {
     return res.status(403).redirect("/");
   }
   user.videos.splice(user.videos.indexOf(id), 1);
+  commentList.forEach((el) => {
+    await Video.findByIdAndDelete(el);
+    user.comments.splice(user.comments.indexOf(el), 1);
+  });
+
   user.save();
   await Video.findByIdAndDelete(id);
   res.redirect("/");
