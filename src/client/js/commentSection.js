@@ -6,7 +6,7 @@ const form = document.getElementById("commentForm");
 let deleteButton = document.querySelectorAll(".comment_delete_button");
 
 const fakeComment = (text, newCommentId) => {
-  const { user, avatar, userId } = form.dataset;
+  const { user, avatar, userid } = form.dataset;
   //element
   const videoCommentUl = document.getElementById("video_comment_list_ul");
   const li = document.createElement("li");
@@ -19,7 +19,7 @@ const fakeComment = (text, newCommentId) => {
   const comment_img = document.createElement("div");
   comment_img.className = "comment_img";
   const img_a = document.createElement("a");
-  img_a.href = `/users/${userId}`;
+  img_a.href = `/users/${userid}`;
   const img = document.createElement("img");
   img.className = "comment_img";
   img.src = avatar;
@@ -31,7 +31,7 @@ const fakeComment = (text, newCommentId) => {
   comment_text.className = "comment_text";
   const text_box = document.createElement("div");
   const username_a = document.createElement("a");
-  username_a.href = `/users/${userId}`;
+  username_a.href = `/users/${userid}`;
   const span = document.createElement("span");
   span.innerText = user;
   const small = document.createElement("small");
