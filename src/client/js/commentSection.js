@@ -23,7 +23,7 @@ const fakeComment = (text, newCommentId) => {
   const img = document.createElement("img");
   img.className = "comment_img";
   img.src = avatar;
-  img.crossorigin = true;
+  img.crossorigin = "crossorigin";
   img_a.prepend(img);
   comment_img.prepend(img_a);
   //comment box
