@@ -43,7 +43,7 @@ const fakeComment = (text, newCommentId) => {
   text_box.append(small);
   comment_text.append(text_box);
   comment_text.append(comment_text_text);
-  video__commnetsLeft.append(img);
+  video__commnetsLeft.append(comment_img);
   video__commnetsLeft.append(comment_text);
   //right box
   const video__commnetsRight = document.createElement("div");
