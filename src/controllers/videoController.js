@@ -214,13 +214,13 @@ export const DeleteComment = async (req, res) => {
 };
 export const deleteVideo = async (req, res) => {
   const { id } = req.params;
-  console.log(id);
   const {
     user: { _id },
   } = req.session;
   const video = await Video.findById(id);
   const user = await User.findById(video.owner);
-  const commentList = video.comment;
+  let qweasd;
+  const commentList = video.comments;
   if (!video) {
     res.status(404).render("404", { pageTitle: "Video not found." });
   }
@@ -228,13 +228,25 @@ export const deleteVideo = async (req, res) => {
     req.flash("error", "Not You are not the owner of the video");
     return res.status(403).redirect("/");
   }
-  user.videos.splice(user.videos.indexOf(id), 1);
-  commentList.forEach((el) => {
-    await Video.findByIdAndDelete(el);
-    user.comments.splice(user.comments.indexOf(el), 1);
+  await user.videos.splice(user.videos.indexOf(id), 1);
+
+  await User.findByIdAndUpdate(video.owner, {
+    videos: user.videos,
   });
 
-  user.save();
   await Video.findByIdAndDelete(id);
+  for (const el of commentList) {
+    console.log("eleleleleleleleleelelelelel", el);
+    qweasd = await User.findOne({ comments: el });
+    console.log("1111111111111111111111", qweasd);
+    await qweasd.comments.splice(qweasd.comments.indexOf(el), 1);
+    const qwe = await User.findByIdAndUpdate(qweasd._id, {
+      comments: qweasd.comments,
+    });
+    console.log("2222222222222222222222", qwe);
+    console.log("3333333333333333333333", qweasd);
+    await Comment.findOneAndDelete(el);
+  }
+
   res.redirect("/");
 };
