@@ -13,13 +13,13 @@ const heroku = process.env.NODE_ENV === "production";
 
 const s3ImageUploader = multerS3({
   s3: s3,
-  bucket: "wetube/images",
+  bucket: "wetube-chanooda/images",
   acl: "public-read",
 });
 
 const s3VideoUploader = multerS3({
   s3: s3,
-  bucket: "wetube/videos",
+  bucket: "wetube-chanooda/videos",
   acl: "public-read",
 });
 
