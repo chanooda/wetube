@@ -65,6 +65,7 @@ const formatTime = (seconds) => {
   }
 };
 const handleLoadedmetadata = (e) => {
+  console.log(video);
   totalTime.innerText = formatTime(Math.floor(video.duration));
   timeline.max = Math.floor(video.duration);
 };
