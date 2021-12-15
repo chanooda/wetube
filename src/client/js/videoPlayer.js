@@ -53,6 +53,8 @@ const handleVolume = (event) => {
   video.volume = value;
 };
 
+console.log(video);
+
 const formatTime = (seconds) => {
   if (seconds * 1000 >= 36000000) {
     return new Date(seconds * 1000).toISOString().substr(11, 8);
