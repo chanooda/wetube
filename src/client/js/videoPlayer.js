@@ -53,7 +53,8 @@ const handleVolume = (event) => {
   video.volume = value;
 };
 
-console.dir(video);
+totalTime.innerText = formatTime(Math.floor(video.duration));
+timeline.max = Math.floor(video.duration);
 
 const formatTime = (seconds) => {
   if (seconds * 1000 >= 36000000) {
@@ -66,11 +67,7 @@ const formatTime = (seconds) => {
     return new Date(seconds * 1000).toISOString().substr(15, 4);
   }
 };
-const handleLoadedmetadata = (e) => {
-  console.log(video);
-  totalTime.innerText = formatTime(Math.floor(video.duration));
-  timeline.max = Math.floor(video.duration);
-};
+const handleLoadedmetadata = (e) => {};
 
 const handleTimeupdate = () => {
   currentTime.innerText = formatTime(Math.floor(video.currentTime));
