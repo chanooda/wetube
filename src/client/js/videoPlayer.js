@@ -69,6 +69,11 @@ const formatTime = (seconds) => {
 if (heroku) {
   totalTime.innerText = formatTime(Math.floor(video.duration));
   timeline.max = Math.floor(video.duration);
+  const asd = document.getElementById("download-link");
+  const { downloadname } = downloadBtn.dataset;
+  const videoUrl = video.currentSrc;
+  asd.href = videoUrl;
+  asd.download = `${downloadname}.mp4`;
 }
 
 const handleTimeupdate = () => {
