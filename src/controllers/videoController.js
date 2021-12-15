@@ -141,7 +141,11 @@ export const postUpload = async (req, res) => {
         : "/" + video[0].path.replace(/[\\]/g, "/"),
       thumbUrl: heroku
         ? thumb[0].location.replace(/[\\]/g, "/")
-        : "/" + thumb[0].path.replace(/[\\]/g, "/"),
+          ? thumb[0].location.replace(/[\\]/g, "/")
+          : ""
+        : "/" + thumb[0].path.replace(/[\\]/g, "/")
+        ? "/" + thumb[0].path.replace(/[\\]/g, "/")
+        : "",
       owner: _id,
       description,
       hashtags: hashtags === "" ? [] : Video.formatHashtags(hashtags),
