@@ -53,7 +53,7 @@ const handleVolume = (event) => {
   video.volume = value;
 };
 
-console.log(video);
+console.dir(video);
 
 const formatTime = (seconds) => {
   if (seconds * 1000 >= 36000000) {
