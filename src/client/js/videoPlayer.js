@@ -16,6 +16,7 @@ const body = document.body;
 const downloadBtn = document.getElementById("download-link");
 const textarea = document.querySelector("#commentForm textarea");
 const comment_more = document.querySelectorAll(".comment_more");
+const heroku = process.env.NODE_ENV === "production";
 
 let controlsTimeout = null;
 let controlsMove = null;
@@ -65,8 +66,10 @@ const formatTime = (seconds) => {
   }
 };
 
-totalTime.innerText = formatTime(Math.floor(video.duration));
-timeline.max = Math.floor(video.duration);
+if (heroku) {
+  totalTime.innerText = formatTime(Math.floor(video.duration));
+  timeline.max = Math.floor(video.duration);
+}
 
 const handleTimeupdate = () => {
   currentTime.innerText = formatTime(Math.floor(video.currentTime));
@@ -121,6 +124,12 @@ const handleended = () => {
   fetch(`/api/videos/${id}/view`, {
     method: "POST",
   });
+  playBtn.classList = "fas fa-play";
+};
+
+const handleLoaded = () => {
+  totalTime.innerText = formatTime(Math.floor(video.duration));
+  timeline.max = Math.floor(video.duration);
 };
 
 const moreIconClickHandler = () => {
@@ -172,6 +181,7 @@ muteBtn.addEventListener("click", handleMuteBtn);
 volumeRange.addEventListener("input", handleVolume);
 video.addEventListener("timeupdate", handleTimeupdate);
 video.addEventListener("ended", handleended);
+video.addEventListener("loadedmetadata", handleLoaded);
 timeline.addEventListener("input", handleTimelineChange);
 fullScreen.addEventListener("click", handleFullScreen);
 videoContainer.addEventListener("mousemove", handleMouseMove);
