@@ -174,7 +174,7 @@ document.addEventListener("keyup", (event) => {
 });
 muteBtn.addEventListener("click", handleMuteBtn);
 volumeRange.addEventListener("input", handleVolume);
-video.addEventListener("loadedmetadata", handleLoadedmetadata);
+video.addEventListener("loadeddata", handleLoadedmetadata);
 video.addEventListener("timeupdate", handleTimeupdate);
 video.addEventListener("ended", handleended);
 timeline.addEventListener("input", handleTimelineChange);
